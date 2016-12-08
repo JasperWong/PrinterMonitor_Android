@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 if (IsSwitch1On == 0) {
                     IsSwitch1On = 1;
-                    mSwitch1.setImageResource(R.drawable.switch_on);
                 } else if (IsSwitch1On == 1) {
                     IsSwitch1On = 0;
                     mSwitch1.setImageResource(R.drawable.switch_off);
@@ -132,16 +131,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mSwitch2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (UpdateTimer != null) {
-                    UpdateTimer.cancel();
-                    UpdateTimer = null;
-                }
                 if (IsSwitch2On == 0) {
                     IsSwitch2On = 1;
-                    mSwitch2.setImageResource(R.drawable.switch_on);
                 } else if (IsSwitch2On == 1) {
                     IsSwitch2On = 0;
-                    mSwitch2.setImageResource(R.drawable.switch_off);
                 }
                 isChange = true;
             }
@@ -150,13 +143,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 if (IsCameraOn == 0) {
-                    mGuest.StartRtmpPlay(rtmpUrl, mRenderer.GetRenderPointer());
                     IsCameraOn = 1;
-                    mCamera.setImageResource(R.drawable.switch_on);
                 } else if (IsCameraOn == 1) {
-                    mGuest.StopRtmpPlay();
                     IsCameraOn = 0;
-                    mCamera.setImageResource(R.drawable.switch_off);
                 }
                 isChange = true;
             }
@@ -165,9 +154,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mGuest = new RTMPGuestKit(this, this);
         UpdateTimer.schedule(UpdateTask,0, 50);
 
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
@@ -175,13 +161,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void makeCameraOn(){
-        mGuest.StartRtmpPlay(rtmpUrl, mRenderer.GetRenderPointer());
-        IsCameraOn = 1;
-        mCamera.setImageResource(R.drawable.switch_on);
+    private void makeSwitch1On(){
+
     }
 
-    private void makeSwitch1On(){
+    private void makeSwitch2ON(){
+
+    }
+
+    private void makeSwitch2OFF(){
 
     }
 
@@ -203,12 +191,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 sendRequestWithHttpURLConnection(url);
             }
 
-            if(switch2Remote==1){
-                makeCameraOn();
-            }
-            else if(switch2Remote==0){
-
-            }
+//            if(switch2Remote==1){
+//                makeCameraOn();
+//            }
+//            else if(switch2Remote==0){
+//
+//            }
 
         }
     };
@@ -224,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String success = new String("update success");
                     if (response.equals(success)) {
                         isChange = false;
-                    } else {
+                    } else if(!isChange){
                         remoteJson = response;
                         {
                             try {
@@ -232,6 +220,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 switch2Remote=Integer.parseInt(jsonObject.getString("switch2"));
                                 switch1Remote=Integer.parseInt(jsonObject.getString("switch1"));
                                 cameraRemote=Integer.parseInt(jsonObject.getString("camera"));
+                                IsSwitch2On=switch2Remote;
+                                IsSwitch1On=switch1Remote;
+                                IsCameraOn=cameraRemote;
+                                if(1==IsSwitch2On){
+                                    mSwitch2.setImageResource(R.drawable.switch_on);
+                                }else if(0==IsSwitch2On){
+                                    mSwitch2.setImageResource(R.drawable.switch_off);
+                                }
+                                if(1==IsSwitch1On){
+                                    mSwitch1.setImageResource(R.drawable.switch_on);
+                                }else if(0==IsSwitch1On){
+                                    mSwitch1.setImageResource(R.drawable.switch_off);
+                                }
+                                if(1==IsCameraOn){
+                                    mGuest.StartRtmpPlay(rtmpUrl, mRenderer.GetRenderPointer());
+                                    mCamera.setImageResource(R.drawable.switch_on);
+                                }else if(0==IsCameraOn){
+                                    mGuest.StopRtmpPlay();
+                                    mCamera.setImageResource(R.drawable.switch_off);
+                                }
                                 Log.d("switch2", switch2Remote + "");
                             } catch (JSONException e) {
                                 e.printStackTrace();
