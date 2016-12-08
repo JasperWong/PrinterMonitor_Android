@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/first"
+            android:icon="@drawable/number1"
+            android:title="远程控制" />
+        <item
+            android:id="@+id/second"
+            android:icon="@drawable/number2"
+            android:title="远程控制" />
+        <item
+            android:title="远程控制"
+            android:id="@+id/third"
+            android:icon="@drawable/number3"/>
+    </group>
+
+    <item android:title="关于"
+        >
+        <menu>
+           <!-- <item
+                android:id="@+id/nav_state"
+                android:title="state"
+                android:showAsAction="never"/>
+-->
+            <item
+                android:id="@+id/nav_version"
+                android:title="version:1.0"/>
+
+        </menu>
+
+    </item>
+
+
+</menu>

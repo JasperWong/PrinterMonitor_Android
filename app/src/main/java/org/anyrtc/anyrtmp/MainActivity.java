@@ -278,8 +278,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent switchIntent=new Intent(this,SecondActivity.class);
             startActivity(switchIntent);
         } else if (id == R.id.third) {
-//            Intent settingIntent=new Intent(this,SettingActivity.class);
-//            startActivity(settingIntent);
+            Intent switchIntent=new Intent(this,ThirdActivity.class);
+            startActivity(switchIntent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

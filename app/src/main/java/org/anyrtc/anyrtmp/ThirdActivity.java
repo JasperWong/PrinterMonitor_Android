@@ -39,11 +39,11 @@ import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SecondActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, RTMPGuestHelper {
+public class ThirdActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, RTMPGuestHelper {
 
     private SurfaceViewRenderer mSurfaceView = null;
     private VideoRenderer mRenderer = null;
-    private String rtmpUrl = "rtmp://123.207.18.69:1935/myapp/testav2";
+    private String rtmpUrl = "rtmp://123.207.18.69:1935/myapp/testav";
     private RTMPGuestKit mGuest = null;
     private ImageView mSwitch1 = null;
     private ImageView mSwitch2 = null;
@@ -59,7 +59,7 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
     private boolean isChange = false;
     public static final int RESPONSE = 0;
 
-    final private int SelectID = 2;
+    final private int SelectID = 3;
     Timer UpdateTimer = new Timer();
 
     private String remoteJson = null;
@@ -73,8 +73,8 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
+        setContentView(R.layout.activity_third);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_third);
         setSupportActionBar(toolbar);
 
         WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
@@ -255,10 +255,10 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
             Intent switchInten=new Intent(this,MainActivity.class);
             startActivity(switchInten);
         } else if (id == R.id.second) {
-//            Intent switchIntent=new Intent(this,SecondActivity.class);
-//            startActivity(switchIntent);
+            Intent switchIntent=new Intent(this,SecondActivity.class);
+            startActivity(switchIntent);
         } else if (id == R.id.third) {
-//            Intent settingIntent=new Intent(this,SettingActivity.class);
+//            Intent settingIntent=new Intent(this,ThirdActivity.class);
 //            startActivity(settingIntent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -288,7 +288,7 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(SecondActivity.this, "打开监控", Toast.LENGTH_LONG).show();
+                Toast.makeText(ThirdActivity.this, "打开监控", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -308,7 +308,7 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(SecondActivity.this, "关闭监控", Toast.LENGTH_LONG).show();
+                Toast.makeText(ThirdActivity.this, "关闭监控", Toast.LENGTH_LONG).show();
             }
         });
     }
