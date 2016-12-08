@@ -29,15 +29,19 @@ import android.support.design.widget.NavigationView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.anyrtc.core.AnyRTMP;
 import org.anyrtc.core.RTMPGuestHelper;
 import org.anyrtc.core.RTMPGuestKit;
 import org.webrtc.SurfaceViewRenderer;
 import org.webrtc.VideoRenderer;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,RTMPGuestHelper {
 
@@ -46,16 +50,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private VideoRenderer mRenderer = null;
     private String rtmpUrl="rtmp://123.207.18.69:1935/myapp/testav";
     private RTMPGuestKit mGuest = null;
+    private ImageView mSwitch1=null;
+    private ImageView mSwitch2=null;
+    private ImageView mCamera=null;
+    private int IsSwitch2On=0;
+    private int IsCameraOn=0;
+    private int IsSwitch1On=0;
+
+    Timer UpdateTimer =new Timer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        mSurfaceView = (SurfaceViewRenderer) findViewById(R.id.surface_view);
-        mSurfaceView.init(AnyRTMP.Inst().Egl().getEglBaseContext(), null);
-        mRenderer = new VideoRenderer(mSurfaceView);
 
+        WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+        localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -65,25 +77,79 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-        localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+        mSurfaceView = (SurfaceViewRenderer) findViewById(R.id.surface_view);
+        mSurfaceView.init(AnyRTMP.Inst().Egl().getEglBaseContext(), null);
+        mRenderer = new VideoRenderer(mSurfaceView);
+        mSwitch1=(ImageView)findViewById(R.id.switch1_iv);
+        mSwitch2=(ImageView)findViewById(R.id.switch2_iv);
+        mCamera=(ImageView)findViewById(R.id.camera_iv);
 
+        mSwitch1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(IsSwitch1On==0){
+                    IsSwitch1On=1;
+                    mSwitch1.setImageResource(R.drawable.switch_on);
+                }else if(IsSwitch1On==1){
+                    IsSwitch1On=0;
+                    mSwitch1.setImageResource(R.drawable.switch_off);
+                }
+            }
+        });
+        mSwitch2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(IsSwitch2On==0){
+                    IsSwitch2On=1;
+                    mSwitch2.setImageResource(R.drawable.switch_on);
+                }else if(IsSwitch2On==1){
+                    IsSwitch2On=0;
+                    mSwitch2.setImageResource(R.drawable.switch_off);
+                }
+            }
+        });
+        mCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(IsCameraOn==0){
+                    mGuest.StartRtmpPlay(rtmpUrl, mRenderer.GetRenderPointer());
+                    IsCameraOn=1;
+                    mCamera.setImageResource(R.drawable.switch_on);
+                }else if(IsCameraOn==1){
+                    mGuest.StopRtmpPlay();
+                    IsCameraOn=0;
+                    mCamera.setImageResource(R.drawable.switch_off);
+                }
+            }
+        });
         AnyRTMP.Inst();
-
-
-
         mGuest = new RTMPGuestKit(this, this);
-        mGuest.StartRtmpPlay(rtmpUrl, mRenderer.GetRenderPointer());
+        UpdateTimer.schedule(UpdateTask,1000,50);
     }
 
     public void OnBtnClicked(View view) {
 
     }
 
+
+
+    TimerTask UpdateTask=new TimerTask() {
+        @Override
+        public void run() {
+
+
+
+        }
+    };
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        if(UpdateTimer!=null){
+            UpdateTimer.cancel();
+            UpdateTimer=null;
+        }
         if (mGuest != null) {
             mGuest.StopRtmpPlay();
             mGuest.Clear();
@@ -131,7 +197,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     @Override
     public void OnRtmplayerOK() {
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(MainActivity.this,"打开监控",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -146,6 +217,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void OnRtmplayerClosed(int errcode) {
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(MainActivity.this,"关闭监控",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

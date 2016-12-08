@@ -32,13 +32,14 @@
         />
 
     <ImageView
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:src="@drawable/switch_off"
         android:id="@+id/switch1_iv"
         android:layout_below="@+id/switch1_tv"
         android:layout_alignRight="@+id/switch1_tv"
-        android:layout_alignEnd="@+id/switch1_tv" />
+        android:layout_alignEnd="@+id/switch1_tv"
+        android:background="?android:attr/selectableItemBackground"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,12 +52,13 @@
         android:layout_centerHorizontal="true" />
 
     <ImageView
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:src="@drawable/switch_off"
         android:id="@+id/camera_iv"
         android:layout_below="@+id/camera_tv"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="?android:attr/selectableItemBackground"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,14 +69,16 @@
         android:layout_alignBaseline="@+id/switch1_tv"
         android:layout_alignBottom="@+id/switch1_tv"
         android:layout_toRightOf="@id/camera_tv"
-        android:layout_marginLeft="60dp"/>
+        android:layout_marginLeft="60dp"
+        />
 
     <ImageView
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:src="@drawable/switch_off"
         android:id="@+id/switch2_iv"
         android:layout_below="@+id/switch2_tv"
         android:layout_alignLeft="@+id/switch2_tv"
-        android:layout_alignStart="@+id/switch2_tv" />
+        android:layout_alignStart="@+id/switch2_tv"
+        android:background="?android:attr/selectableItemBackground"/>
 </RelativeLayout>
