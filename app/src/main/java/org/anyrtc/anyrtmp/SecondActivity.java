@@ -1,40 +1,20 @@
-/**
-*  Copyright (c) 2016 The AnyRTC project authors. All Rights Reserved.
-*
-*  Please visit https://www.anyrtc.io for detail.
-*
-* The GNU General Public License is a free, copyleft license for
-* software and other kinds of works.
-*
-* The licenses for most software and other practical works are designed
-* to take away your freedom to share and change the works.  By contrast,
-* the GNU General Public License is intended to guarantee your freedom to
-* share and change all versions of a program--to make sure it remains free
-* software for all its users.  We, the Free Software Foundation, use the
-* GNU General Public License for most of our software; it applies also to
-* any other work released this way by its authors.  You can apply it to
-* your programs, too.
-* See the GNU LICENSE file for more info.
-*/
 package org.anyrtc.anyrtmp;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -59,11 +39,11 @@ import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, RTMPGuestHelper {
+public class SecondActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, RTMPGuestHelper {
 
     private SurfaceViewRenderer mSurfaceView = null;
     private VideoRenderer mRenderer = null;
-    private String rtmpUrl = "rtmp://123.207.18.69:1935/myapp/testav";
+    private String rtmpUrl = "rtmp://123.207.18.69:1935/myapp/testav2";
     private RTMPGuestKit mGuest = null;
     private ImageView mSwitch1 = null;
     private ImageView mSwitch2 = null;
@@ -79,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean isChange = false;
     public static final int RESPONSE = 0;
 
-    final private int SelectID = 1;
+    final private int SelectID = 2;
     Timer UpdateTimer = new Timer();
 
     private String remoteJson = null;
@@ -93,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setContentView(R.layout.activity_second);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
         setSupportActionBar(toolbar);
 
         WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
@@ -273,10 +253,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.first) {
-//
+            Intent switchInten=new Intent(this,MainActivity.class);
+            startActivity(switchInten);
         } else if (id == R.id.second) {
-            Intent switchIntent=new Intent(this,SecondActivity.class);
-            startActivity(switchIntent);
+//            Intent switchIntent=new Intent(this,SecondActivity.class);
+//            startActivity(switchIntent);
         } else if (id == R.id.third) {
 //            Intent settingIntent=new Intent(this,SettingActivity.class);
 //            startActivity(settingIntent);
@@ -308,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(MainActivity.this, "打开监控", Toast.LENGTH_LONG).show();
+                Toast.makeText(SecondActivity.this, "打开监控", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -328,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(MainActivity.this, "关闭监控", Toast.LENGTH_LONG).show();
+                Toast.makeText(SecondActivity.this, "关闭监控", Toast.LENGTH_LONG).show();
             }
         });
     }
