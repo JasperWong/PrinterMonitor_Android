@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        mSurfaceView = (SurfaceViewRenderer) findViewById(R.id.suface_view);
+        mSurfaceView = (SurfaceViewRenderer) findViewById(R.id.surface_view);
         mSurfaceView.init(AnyRTMP.Inst().Egl().getEglBaseContext(), null);
         mRenderer = new VideoRenderer(mSurfaceView);
 
@@ -65,10 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-//        localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-//        Window window = getWindow();
-//
+        WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+        localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+
         AnyRTMP.Inst();
 
 
@@ -78,23 +77,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void OnBtnClicked(View view) {
-//        String rtmpUrl = mEditRtmpUrl.getEditableText().toString();
-//        if (rtmpUrl.length() == 0) {
-//            return;
-//        }
-//        if (view.getId() == R.id.btn_start_live) {
-//            Intent it = new Intent(this, HosterActivity.class);
-//            Bundle bd = new Bundle();
-//            bd.putString("rtmp_url", rtmpUrl);
-//            it.putExtras(bd);
-//            startActivity(it);
-//        } else {
-//            Intent it = new Intent(this, GuestActivity.class);
-//            Bundle bd = new Bundle();
-//            bd.putString("rtmp_url", rtmpUrl);
-//            it.putExtras(bd);
-//            startActivity(it);
-//        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mGuest != null) {
+            mGuest.StopRtmpPlay();
+            mGuest.Clear();
+            mGuest = null;
+        }
     }
 
     @Override
