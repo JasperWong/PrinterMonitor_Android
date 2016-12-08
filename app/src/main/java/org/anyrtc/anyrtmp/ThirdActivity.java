@@ -4,17 +4,19 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -77,8 +79,8 @@ public class ThirdActivity extends AppCompatActivity implements NavigationView.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_third);
         setSupportActionBar(toolbar);
 
-        WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-        localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+//        WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+//        localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -129,6 +131,7 @@ public class ThirdActivity extends AppCompatActivity implements NavigationView.O
                 isChange = true;
             }
         });
+        AnyRTMP.Inst();
         mGuest = new RTMPGuestKit(this, this);
         UpdateTimer.schedule(UpdateTask,0, 50);
 
@@ -212,10 +215,10 @@ public class ThirdActivity extends AppCompatActivity implements NavigationView.O
                                     mSwitch1.setImageResource(R.drawable.switch_off);
                                 }
                                 if(1==IsCameraOn){
-                                    mGuest.StartRtmpPlay(rtmpUrl, mRenderer.GetRenderPointer());
+                                    if (mGuest != null) mGuest.StartRtmpPlay(rtmpUrl, mRenderer.GetRenderPointer());
                                     mCamera.setImageResource(R.drawable.switch_on);
                                 }else if(0==IsCameraOn){
-                                    mGuest.StopRtmpPlay();
+                                    if (mGuest != null) mGuest.StopRtmpPlay();
                                     mCamera.setImageResource(R.drawable.switch_off);
                                 }
 //                                Log.d("switch2", switch2Remote + "");
@@ -254,9 +257,11 @@ public class ThirdActivity extends AppCompatActivity implements NavigationView.O
         if (id == R.id.first) {
             Intent switchInten=new Intent(this,MainActivity.class);
             startActivity(switchInten);
+            finish();
         } else if (id == R.id.second) {
             Intent switchIntent=new Intent(this,SecondActivity.class);
             startActivity(switchIntent);
+            finish();
         } else if (id == R.id.third) {
 //            Intent settingIntent=new Intent(this,ThirdActivity.class);
 //            startActivity(settingIntent);

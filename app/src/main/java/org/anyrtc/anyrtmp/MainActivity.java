@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
-        WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-        localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+//        WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+//        localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -233,10 +233,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     mSwitch1.setImageResource(R.drawable.switch_off);
                                 }
                                 if(1==IsCameraOn){
-                                    mGuest.StartRtmpPlay(rtmpUrl, mRenderer.GetRenderPointer());
+                                    if (mGuest != null) mGuest.StartRtmpPlay(rtmpUrl, mRenderer.GetRenderPointer());
                                     mCamera.setImageResource(R.drawable.switch_on);
                                 }else if(0==IsCameraOn){
-                                    mGuest.StopRtmpPlay();
+                                    if (mGuest != null) mGuest.StopRtmpPlay();
                                     mCamera.setImageResource(R.drawable.switch_off);
                                 }
 //                                Log.d("switch2", switch2Remote + "");
@@ -277,9 +277,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.second) {
             Intent switchIntent=new Intent(this,SecondActivity.class);
             startActivity(switchIntent);
+            finish();
         } else if (id == R.id.third) {
             Intent switchIntent=new Intent(this,ThirdActivity.class);
             startActivity(switchIntent);
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
