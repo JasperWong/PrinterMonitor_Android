@@ -235,6 +235,21 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
 
     };
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if(id==R.id.action_refresh){
+            if (mGuest != null) mGuest.StopRtmpPlay();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
