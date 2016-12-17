@@ -45,7 +45,7 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
 
     private SurfaceViewRenderer mSurfaceView = null;
     private VideoRenderer mRenderer = null;
-    private String rtmpUrl = "rtmp://123.207.18.69:1935/myapp/testav";
+    private String rtmpUrl = "rtmp://123.207.18.69:1935/myapp/testav2";
     private RTMPGuestKit mGuest = null;
     private ImageView mSwitch1 = null;
     private ImageView mSwitch2 = null;
