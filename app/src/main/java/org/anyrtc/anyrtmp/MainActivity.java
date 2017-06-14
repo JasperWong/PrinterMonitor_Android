@@ -29,20 +29,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-
 import org.anyrtc.core.AnyRTMP;
 import org.anyrtc.core.RTMPGuestHelper;
 import org.anyrtc.core.RTMPGuestKit;
@@ -50,7 +45,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.webrtc.SurfaceViewRenderer;
 import org.webrtc.VideoRenderer;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -63,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private SurfaceViewRenderer mSurfaceView = null;
     private VideoRenderer mRenderer = null;
-    private String rtmpUrl = "rtmp://123.207.18.69:1935/myapp/testav";
+    private String rtmpUrl = "rtmp://123.207.18.69:1935/myapp/testav4";
     private RTMPGuestKit mGuest = null;
     private ImageView mSwitch1 = null;
     private ImageView mSwitch2 = null;
@@ -79,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean isChange = false;
     public static final int RESPONSE = 0;
 
-    final private int SelectID = 1;
+    final private int SelectID = 4;//大作业用
     Timer UpdateTimer = new Timer();
 
     private String remoteJson = null;
@@ -152,24 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AnyRTMP.Inst();
         mGuest = new RTMPGuestKit(this, this);
         UpdateTimer.schedule(UpdateTask,0, 50);
-
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-    }
-
-    public void OnBtnClicked(View view) {
-
-    }
-
-    private void makeSwitch1On(){
-
-    }
-
-    private void makeSwitch2ON(){
-
-    }
-
-    private void makeSwitch2OFF(){
-
     }
 
     TimerTask UpdateTask = new TimerTask() {
@@ -189,25 +166,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String url = new String("http://123.207.18.69:8082/3dPrinterMonitor/user/index?" + "SelectId=" + SelectID);
                 sendRequestWithHttpURLConnection(url);
             }
-
-//            if(switch2Remote==1){
-//                makeCameraOn();
-//            }
-//            else if(switch2Remote==0){
-//
-//            }
-
         }
     };
 
-
     private Handler handler = new Handler() {
-
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case RESPONSE: {
                     String response = (String) msg.obj;
-
                     String success = new String("update success");
                     if (response.equals(success)) {
                         isChange = false;
@@ -298,7 +264,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(id==R.id.action_refresh){
             if (mGuest != null) mGuest.StopRtmpPlay();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
