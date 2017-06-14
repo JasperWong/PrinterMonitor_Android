@@ -63,25 +63,25 @@
 
 
 
-    <!--&lt;!&ndash;     for Samsung &ndash;&gt;-->
-    <!--<uses-permission android:name="com.sec.android.provider.badge.permission.READ"/>-->
-    <!--<uses-permission android:name="com.sec.android.provider.badge.permission.WRITE"/>-->
+    <!--     for Samsung -->
+    <uses-permission android:name="com.sec.android.provider.badge.permission.READ"/>
+    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE"/>
 
-    <!--&lt;!&ndash;     for htc &ndash;&gt;-->
-    <!--<uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS"/>-->
-    <!--<uses-permission android:name="com.htc.launcher.permission.UPDATE_SHORTCUT"/>-->
+    <!--     for htc -->
+    <uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.htc.launcher.permission.UPDATE_SHORTCUT"/>
 
-    <!--&lt;!&ndash;     for sony &ndash;&gt;-->
-    <!--<uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE"/>-->
-    <!--<uses-permission android:name="com.sonymobile.home.permission.PROVIDER_INSERT_BADGE"/>-->
+    <!--     for sony -->
+    <uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE"/>
+    <uses-permission android:name="com.sonymobile.home.permission.PROVIDER_INSERT_BADGE"/>
 
-    <!--&lt;!&ndash;     for apex &ndash;&gt;-->
-    <!--<uses-permission android:name="com.anddoes.launcher.permission.UPDATE_COUNT"/>-->
+    <!--     for apex -->
+    <uses-permission android:name="com.anddoes.launcher.permission.UPDATE_COUNT"/>
 
-    <!--&lt;!&ndash;     for solid &ndash;&gt;-->
-    <!--<uses-permission android:name="com.majeur.launcher.permission.UPDATE_BADGE"/>-->
+    <!--     for solid -->
+    <uses-permission android:name="com.majeur.launcher.permission.UPDATE_BADGE"/>
 
-    <!--     for huawei -->
+         for huawei
 
 
     <!--     for android -->
