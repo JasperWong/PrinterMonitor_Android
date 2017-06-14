@@ -29,10 +29,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -57,18 +59,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private SurfaceViewRenderer mSurfaceView = null;
     private VideoRenderer mRenderer = null;
-    private String rtmpUrl = "rtmp://123.207.18.69:1935/myapp/testav4";
+    private String rtmpUrl = "rtmp://119.29.135.109:1935/myapp/testav5";
     private RTMPGuestKit mGuest = null;
     private ImageView mSwitch1 = null;
-    private ImageView mSwitch2 = null;
+    private TextView temperatureTv=null;
+    private TextView humidityTv=null;
     private ImageView mCamera = null;
-    private int IsSwitch2On ;
+
     private int IsCameraOn;
     private int IsSwitch1On;
-
+    private int IsSwitch2On;
     private int switch1Remote;
     private int switch2Remote;
     private int cameraRemote;
+    private float temperatureRemote;
+    private float humidityRemote;
 
     private boolean isChange = false;
     public static final int RESPONSE = 0;
@@ -82,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+
 
 
     @Override
@@ -102,13 +108,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+
         mSurfaceView = (SurfaceViewRenderer) findViewById(R.id.surface_view);
         mSurfaceView.init(AnyRTMP.Inst().Egl().getEglBaseContext(), null);
         mRenderer = new VideoRenderer(mSurfaceView);
         mSwitch1 = (ImageView) findViewById(R.id.switch1_iv);
-        mSwitch2 = (ImageView) findViewById(R.id.switch2_iv);
         mCamera = (ImageView) findViewById(R.id.camera_iv);
-
+        temperatureTv=(TextView)findViewById(R.id.temperature_show);
+        humidityTv=(TextView)findViewById(R.id.humidity_show);
         mSwitch1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,17 +125,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } else if (IsSwitch1On == 1) {
                     IsSwitch1On = 0;
                     mSwitch1.setImageResource(R.drawable.switch_off);
-                }
-                isChange = true;
-            }
-        });
-        mSwitch2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (IsSwitch2On == 0) {
-                    IsSwitch2On = 1;
-                } else if (IsSwitch2On == 1) {
-                    IsSwitch2On = 0;
                 }
                 isChange = true;
             }
@@ -154,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public void run() {
             if (isChange) {
                 String url = new String(
-                        "http://123.207.18.69:8082/3dPrinterMonitor/user/insert?"
+                        "http://119.29.135.109:8082/3dPrinterMonitor/user/insert?"
                                 + "id=" + SelectID
                                 + "&username=first"
                                 + "&switch1=" + IsSwitch1On
@@ -163,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 );
                 sendRequestWithHttpURLConnection(url);
             } else if (!isChange) {
-                String url = new String("http://123.207.18.69:8082/3dPrinterMonitor/user/index?" + "SelectId=" + SelectID);
+                String url = new String("http://119.29.135.109:8082/3dPrinterMonitor/user/index?" + "SelectId=" + SelectID);
                 sendRequestWithHttpURLConnection(url);
             }
         }
@@ -185,13 +182,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 switch2Remote=Integer.parseInt(jsonObject.getString("switch2"));
                                 switch1Remote=Integer.parseInt(jsonObject.getString("switch1"));
                                 cameraRemote=Integer.parseInt(jsonObject.getString("camera"));
+                                temperatureRemote=Float.parseFloat(jsonObject.getString("temperature"));
+                                humidityRemote=Float.parseFloat(jsonObject.getString("humidity"));
                                 IsSwitch2On=switch2Remote;
                                 IsSwitch1On=switch1Remote;
                                 IsCameraOn=cameraRemote;
-                                if(1==IsSwitch2On){
-                                    mSwitch2.setImageResource(R.drawable.switch_on);
-                                }else if(0==IsSwitch2On){
-                                    mSwitch2.setImageResource(R.drawable.switch_off);
+                                if(temperatureRemote!=0||humidityRemote!=0){
+                                    temperatureTv.setText(temperatureRemote+"℃");
+                                    humidityTv.setText(humidityRemote+"%");
                                 }
                                 if(1==IsSwitch1On){
                                     mSwitch1.setImageResource(R.drawable.switch_on);
@@ -205,13 +203,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     if (mGuest != null) mGuest.StopRtmpPlay();
                                     mCamera.setImageResource(R.drawable.switch_off);
                                 }
-//                                Log.d("switch2", switch2Remote + "");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-//                        Log.d("test", remoteJson);
-
+                        Log.d("json", remoteJson);
                     }
                     break;
                 }

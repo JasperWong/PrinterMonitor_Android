@@ -24,61 +24,86 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/switch1_tv"
-        android:text="打印机1"
+        android:text="开关"
         android:layout_below="@+id/surface_view"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="16dp"
-        android:textSize="15dp"
-        />
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
+        android:textSize="15dp" />
 
     <ImageView
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:src="@drawable/switch_off"
         android:id="@+id/switch1_iv"
         android:layout_below="@+id/switch1_tv"
-        android:layout_alignRight="@+id/switch1_tv"
-        android:layout_alignEnd="@+id/switch1_tv"
-        android:background="?android:attr/selectableItemBackground"/>
+        android:layout_marginLeft="30dp"
+        android:background="?android:attr/selectableItemBackground"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/temperature_tv"
+        android:text="温度"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_below="@+id/humidity_show"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/temperature_show"
+        android:layout_below="@+id/temperature_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="15dp"
+        android:text="30.1℃"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/humidity_tv"
+        android:text="湿度"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_below="@+id/surface_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/humidity_show"
+        android:layout_below="@+id/humidity_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="15dp"
+        android:text="60%"/>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/camera_tv"
         android:text="摄像头"
+        android:textColor="@color/black"
         android:textSize="15dp"
         android:layout_alignBaseline="@+id/switch1_tv"
+        android:layout_alignParentRight="true"
         android:layout_alignBottom="@+id/switch1_tv"
+        android:layout_marginRight="40dp"
         android:layout_centerHorizontal="true" />
+
 
     <ImageView
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:src="@drawable/switch_off"
         android:id="@+id/camera_iv"
         android:layout_below="@+id/camera_tv"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="38dp"
         android:background="?android:attr/selectableItemBackground"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/switch2_tv"
-        android:text="打印机2"
-        android:textSize="15dp"
-        android:layout_alignBaseline="@+id/switch1_tv"
-        android:layout_alignBottom="@+id/switch1_tv"
-        android:layout_toRightOf="@id/camera_tv"
-        android:layout_marginLeft="60dp"
-        />
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/switch_off"
-        android:id="@+id/switch2_iv"
-        android:layout_below="@+id/switch2_tv"
-        android:layout_alignLeft="@+id/switch2_tv"
-        android:layout_alignStart="@+id/switch2_tv"
-        android:background="?android:attr/selectableItemBackground"/>
 </RelativeLayout>
